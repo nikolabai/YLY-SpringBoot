@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yly.mapper.OrganizationMapper">
+  <resultMap id="BaseResultMap" type="com.yly.domain.Organization">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="branch_name" jdbcType="VARCHAR" property="branchName" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, branch_name, code, create_time, deleted, name, update_time, parent_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from organization
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from organization
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yly.domain.Organization">
+    insert into organization (id, branch_name, code, 
+      create_time, deleted, name, 
+      update_time, parent_id)
+    values (#{id,jdbcType=BIGINT}, #{branchName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{parentId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yly.domain.Organization">
+    insert into organization
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="branchName != null">
+        branch_name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="branchName != null">
+        #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yly.domain.Organization">
+    update organization
+    <set>
+      <if test="branchName != null">
+        branch_name = #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yly.domain.Organization">
+    update organization
+    set branch_name = #{branchName,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT},
+      name = #{name,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      parent_id = #{parentId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="queryOrganizationCountByConditions" resultType="java.lang.Long">
+		select count(o.id) from organization o where true
+		<if test="map != null">
+			<if test="map.id != null">
+				and o.id = #{map.id}
+			</if>
+			<if test="map.name != null">
+				and o.name = #{map.name}
+			</if>
+			<if test="map.code != null">
+				and o.code = #{map.code}
+			</if>
+			<if test="map.createTimeStart != null">
+				and o.create_time >= #{map.createTimeStart}
+			</if>
+			<if test="map.createTimeEnd != null">
+				and #{map.createTimeEnd} >= o.create_time
+			</if>
+		</if>
+	</select>
+	<!--  -->
+	<select id="queryOrganizationByConditions" resultMap="organizationMap">
+		select 
+		<include refid="Base_Column_List"></include>
+		from organization o where true
+		<if test="map != null">
+			<if test="map.id != null">
+				and o.id = #{map.id}
+			</if>
+			<if test="map.name != null">
+				and o.name = #{map.name}
+			</if>
+			<if test="map.code != null">
+				and o.code = #{map.code}
+			</if>
+			<if test="map.createTimeStart != null">
+				and o.create_time >= #{map.createTimeStart}
+			</if>
+			<if test="map.createTimeEnd != null">
+				and #{map.createTimeEnd} >= o.create_time
+			</if>
+		</if>
+		<if test="easyVo != null">
+			<if test="easyVo.sort != null">
+				order by ${easyVo.sort}
+			</if>
+			<if test="easyVo.order != null">
+				${easyVo.order}
+			</if>
+			limit ${(easyVo.page - 1) * easyVo.rows},#{easyVo.rows}
+		</if>
+	</select>
+  
+</mapper>

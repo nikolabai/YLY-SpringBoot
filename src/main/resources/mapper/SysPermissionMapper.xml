@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yly.mapper.SysPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.yly.domain.SysPermission">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="permission_type" jdbcType="VARCHAR" property="permissionType" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="sort" jdbcType="DECIMAL" property="sort" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yly.domain.SysPermission">
+    <result column="permission_url" jdbcType="LONGVARCHAR" property="permissionUrl" />
+    <result column="query_condition" jdbcType="LONGVARCHAR" property="queryCondition" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, create_time, deleted, description, name, update_time, permission_type, 
+    parent_id, sort
+  </sql>
+  <sql id="Blob_Column_List">
+    permission_url, query_condition
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yly.domain.SysPermission">
+    insert into sys_permission (id, code, create_time, 
+      deleted, description, name, 
+      update_time, permission_type, parent_id, 
+      sort, permission_url, query_condition
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT}, #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{permissionType,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{sort,jdbcType=DECIMAL}, #{permissionUrl,jdbcType=LONGVARCHAR}, #{queryCondition,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yly.domain.SysPermission">
+    insert into sys_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="permissionType != null">
+        permission_type,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="permissionUrl != null">
+        permission_url,
+      </if>
+      <if test="queryCondition != null">
+        query_condition,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="permissionType != null">
+        #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=DECIMAL},
+      </if>
+      <if test="permissionUrl != null">
+        #{permissionUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="queryCondition != null">
+        #{queryCondition,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yly.domain.SysPermission">
+    update sys_permission
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="permissionType != null">
+        permission_type = #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=DECIMAL},
+      </if>
+      <if test="permissionUrl != null">
+        permission_url = #{permissionUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="queryCondition != null">
+        query_condition = #{queryCondition,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yly.domain.SysPermission">
+    update sys_permission
+    set code = #{code,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT},
+      description = #{description,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      permission_type = #{permissionType,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      sort = #{sort,jdbcType=DECIMAL},
+      permission_url = #{permissionUrl,jdbcType=LONGVARCHAR},
+      query_condition = #{queryCondition,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yly.domain.SysPermission">
+    update sys_permission
+    set code = #{code,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT},
+      description = #{description,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      permission_type = #{permissionType,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      sort = #{sort,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+	<select id="queryPermissionCountByConditions" resultType="java.lang.Long">
+		select count(rp.id) from rbac_permission rp where true
+		<if test="map != null">
+			<if test="map.id != null">
+				and rp.id = #{map.id}
+			</if>
+			<if test="map.name != null">
+				and rp.name = #{map.name}
+			</if>
+			<if test="map.code != null">
+				and rp.code = #{map.code}
+			</if>
+			<if test="map.createTimeStart != null">
+				and rp.create_time >= #{map.createTimeStart}
+			</if>
+			<if test="map.createTimeEnd != null">
+				and #{map.createTimeEnd} >= rp.create_time
+			</if>
+		</if>
+	</select>
+	
+	<select id="queryPermissionByConditions" resultMap="permissionMap">
+		select 
+		<include refid="Base_Column_List"></include>
+		from rbac_permission rp where true
+		<if test="map != null">
+			<if test="map.id != null">
+				and rp.id = #{map.id}
+			</if>
+			<if test="map.name != null">
+				and rp.name = #{map.name}
+			</if>
+			<if test="map.code != null">
+				and rp.code = #{map.code}
+			</if>
+			<if test="map.createTimeStart != null">
+				and rp.create_time >= #{map.createTimeStart}
+			</if>
+			<if test="map.createTimeEnd != null">
+				and #{map.createTimeEnd} >= rp.create_time
+			</if>
+		</if>
+		<if test="easyVo != null">
+			<if test="easyVo.sort != null">
+				order by ${easyVo.sort}
+			</if>
+			<if test="easyVo.order != null">
+				${easyVo.order}
+			</if>
+			limit ${(easyVo.page - 1) * easyVo.rows},#{easyVo.rows}
+		</if>
+	</select>
+</mapper>
